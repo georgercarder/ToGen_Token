@@ -9,11 +9,11 @@ contract ToGen {
 
   //array of balances
   mapping (address => uint256) public balanceOf;
-  mapping (address => mapping (address => uint256)) public allowance;
 
   //generates public event on blockchain that notifies clients
   event Transfer(address indexed from, address indexed to, uint256 value);
 
+  event Burn(address indexed from, uint256 value);
 
   /*Initializes contract w initial supply tokens to the creator of the contract*/
   function ToGen(
@@ -55,20 +55,7 @@ contract ToGen {
   }
 
   // how is transferFrom different?? is this here for demo?? Administrative??
-  function transferFrom(address _from, address _to, uint256 _value){
-    require(_value <= allowance[_from][msg.sender]); // check allowance
-    allowance[_from][msg.sender] -= _value;
-    _transfer(_from, _to, _value);
-    return true;  
-  }
-
-  // allows _spender to spend no more than _value tokens on your behalf
-  //approve
-  function approve(address _spend, uint256 _value) public 
-    returns (bool success) {
-    allowance[msg.sender][_spender] = _value;
-    return true;  
-  }
+	// tranfer from lived here
 
   // like above but pings contract about it
   //approveAndCall
@@ -95,17 +82,6 @@ contract ToGen {
 
   //destroys tokens from account
   //burnFrom
-	function burnFrom(address _from, uint256 _value) 
-	  public 
-		returns (bool success){
-		require(balanceOf[_from] >= _value);
-		require(_value <= allowance[_from][msg.sender]);
-		balanceOf[_from] -= _value;
-	  allowance[_from][msg.sender] -= _value;
-		totalSupply -= _value;
-		Burn(_from, _value);
-		return true;	
-	}
 }
 
 
