@@ -4,7 +4,7 @@ var tokenSymbol= 'TGN';
 var decimalUnits = 18;
 
 
-var minter = minterFactory.new( _initialSupply,{from:eth.accounts[0],data:minterCompiled,gas:1000000}, function(e,contract){
+var minter = minterFactory.new( _initialSupply, tokenName, tokenSymbol, decimalUnits,{from:eth.accounts[0],data:minterCompiled,gas:1000000}, function(e,contract){
 	if(!e) {
 		
 		if(!contract.address){
