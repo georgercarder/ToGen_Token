@@ -22,7 +22,7 @@ contract ToGen {
     string tokenSymbol, 
     uint8 decimalUnits
   ){
-    balanceOf[msg.sender] = initial Supply; //creator gets all init tokens
+    balanceOf[msg.sender] = initialSupply; //creator gets all init tokens
     name = tokenName;  //set the name for display purposes
     symbol = tokenSymbol; //set the symbol for display purposes
     decimals = decimalUnits; //amount of decimals for display purposes
