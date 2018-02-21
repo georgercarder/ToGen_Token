@@ -21,7 +21,7 @@ contract ToGen {
     string tokenName, 
     string tokenSymbol, 
     uint8 decimalUnits
-  ){
+  ) public {
     balanceOf[msg.sender] = initialSupply; //creator gets all init tokens
     name = tokenName;  //set the name for display purposes
     symbol = tokenSymbol; //set the symbol for display purposes
@@ -29,7 +29,7 @@ contract ToGen {
   }
 
   //Internal transfer, can only be called by this contract
-  function _transfer(address _from, address _to, uint _value) internal {
+  function _transfer (address _from, address _to, uint _value) internal {
     // prevent transfer to 0x0. Use burn() instead
     require(_to !=0x0);
     // check if sender has sufficient funds
@@ -37,7 +37,7 @@ contract ToGen {
     // check for overflows
     require(balanceOf[_to] + _value > balanceOf[_to]);
     // save this for an assertion in the future
-    uint previousBalances = balanceOf[_from] + balanceOf[_to]);
+    uint previousBalances = balanceOf[_from] + balanceOf[_to];
     // subtract from the sender
     balanceOf[_from] -= _value;
     // add the same to recipient
@@ -59,15 +59,6 @@ contract ToGen {
 
   // like above but pings contract about it
   //approveAndCall
-  function approveAndCall(address _spender, uint256 _value, bytes _extraData)
-    public 
-    returns (bool success) {
-    tokenRecipient spender = tokenRecipient(_spender);
-    if (approve(_spender, _value)) {
-      spender.receiveApproval(msg.sender, _value, this, _extraData);
-      return true;  
-    }
-  }
 
   // destroys tokens
   // removes _value tokens from the system irreversibly
@@ -76,7 +67,7 @@ contract ToGen {
     require(balanceOf[msg.sender] >= _value);
     balanceOf[msg.sender] -= _value;
     totalSupply -= _value;
-    Burn(msg.sender _value);
+    Burn(msg.sender, _value);
     return true;  
   }
 
